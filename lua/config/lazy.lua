@@ -52,6 +52,7 @@ require('lazy').setup({
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' }, -- Only load when opening files
     opts = {
       signs = {
         add = { text = '+' },
@@ -454,7 +455,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'saghen/blink.cmp',
-    event = 'VimEnter',
+    lazy = false, -- Load immediately for better startup experience
     version = '1.*',
     dependencies = {
       -- Snippet Engine
@@ -575,7 +576,7 @@ require('lazy').setup({
 
   {
     'darianmorat/gruvdark.nvim',
-    lazy = false,
+    lazy = true, -- Don't load unless explicitly called
     priority = 1000,
     opts = {},
   },
@@ -622,6 +623,7 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPost', 'BufNewFile' }, -- Load when opening files
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
